@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm"
 
 @Entity()
 export class Draw {
@@ -18,7 +18,7 @@ export class Draw {
     @Column()
     y_cordinate: string
 
-    @Column()
-    age: number
+    @CreateDateColumn()
+    create_at: number
 
 }
