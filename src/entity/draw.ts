@@ -1,16 +1,22 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 @Entity()
-export class User {
+export class Draw {
 
     @PrimaryGeneratedColumn()
     id: number
 
     @Column()
-    firstName: string
+    fileId: string
 
     @Column()
-    lastName: string
+    drawing: string
+
+    @Column()
+    x_cordinate: string
+
+    @Column()
+    y_cordinate: string
 
     @Column()
     age: number
