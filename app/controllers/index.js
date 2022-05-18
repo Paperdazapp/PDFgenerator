@@ -2,7 +2,12 @@
 const { PDFDocument } = require('pdf-lib');
 const fetch = require("node-fetch");
 const { readFile, writeFile } = require('fs/promises');
+const FormData  = require('form-data');
+const axios = require('axios');
+const fs = require("fs")
 
+
+const UPLOAD_URL= "http://paperdaz-backend.herokuapp.com/api/v2/file/upload"
 
 const fillForm =async(req, res, next)=>{
        const {pdf_url, data} = req.body
@@ -13,14 +18,13 @@ const fillForm =async(req, res, next)=>{
         console.log("number of pages ="+(parseInt(numPages)+1)) 
 
         try {    
-       
           const form = pdfDoc.getForm()
           const fields = form.getFields()
           console.log(`${fields.length} fields found`)
           fields.forEach(field => {
             const type = field.constructor.name
             const name = field.getName()
-            console.log(`${type}: ${name}`)
+            // console.log(`${type}: ${name}`)
       
             data.map(el => {
               //if text
@@ -55,17 +59,36 @@ const fillForm =async(req, res, next)=>{
       
           })
 
-        //   form.flatten();
+        
 
           const pdfBytes = await pdfDoc.save();
+          // return console.log(pdfBytes)
           await writeFile("output.pdf", pdfBytes);
           console.log('PDF created!');
-          res.send("pdf generated")
+
+
+          const file =  fs.readFile('../output.pdf');
+
+            return console.log(file);
+     
+            let formData = new FormData();
+            formData.append("upload", fil, "output.pdf");
+           
+            await axios.post(UPLOAD_URL, formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }).then((response) => {
+                response;
+              }).catch((error) => {
+                error;
+              });
+       
       
         } catch (error) {
           console.log(error)
         }
-        
+         
           //........................test
     
 } 
