@@ -69,10 +69,10 @@ const fillForm =async(req, res, next)=>{
 
           const file =  fs.readFile('../output.pdf');
 
-            return console.log(file);
+            // return console.log(file);
      
             let formData = new FormData();
-            formData.append("upload", fil, "output.pdf");
+            formData.append("upload", pdfBytes, "output.pdf");
            
             await axios.post(UPLOAD_URL, formData, {
                 headers: {
