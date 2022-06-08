@@ -6,8 +6,8 @@ const FormData  = require('form-data');
 const axios = require('axios');
 const fs = require("fs")
 
-
-const UPLOAD_URL= "http://paperdaz-backend.herokuapp.com/api/v2/file/upload"
+require("dotenv").config();  
+const UPLOAD_URL= "http://localhost:9001/api/v2/file/upload_pdf"
 
 const fillForm =async(req, res, next)=>{
        const {pdf_url, data} = req.body
@@ -24,7 +24,7 @@ const fillForm =async(req, res, next)=>{
           fields.forEach(field => {
             const type = field.constructor.name
             const name = field.getName()
-            // console.log(`${type}: ${name}`)
+            console.log(`${type}: ${name}`)
       
             data.map(el => {
               //if text
@@ -59,41 +59,35 @@ const fillForm =async(req, res, next)=>{
       
           })
 
-        
-
           const pdfBytes = await pdfDoc.save();
-          // return console.log(pdfBytes)
           await writeFile("output.pdf", pdfBytes);
           console.log('PDF created!');
 
 
-          const file =  fs.readFile('../output.pdf');
+        const FormData = require('form-data');
+ 
+        const formFile = new FormData();
+        formFile.append('upload', fs.createReadStream('././output.pdf'));
+ 
+        await axios.post(UPLOAD_URL, formFile, { headers: formFile.getHeaders() })
+        .then(function (response) {
+          console.log("yes", response)
+          res.status(201).json(response.data)
+        })
+        .catch(function (err) {
+          console.log(err)
+          res.status(400).json(err)
+        });
 
-            // return console.log(file);
-     
-            let formData = new FormData();
-            formData.append("upload", pdfBytes, "output.pdf");
-           
-            await axios.post(UPLOAD_URL, formData, {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }).then((response) => {
-                response;
-              }).catch((error) => {
-                error;
-              });
-       
-      
-        } catch (error) {
-          console.log(error)
-        }
-         
-          //........................test
-    
-} 
+      }catch(err){
+        res.status(400).json(err)
+      }
 
 
+
+}  
+
+ 
 module.exports = {
     fillForm
 }

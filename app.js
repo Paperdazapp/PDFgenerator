@@ -7,6 +7,9 @@ var logger = require('morgan');
 const { PDFDocument, rgb} = require('pdf-lib');
 const fetch = require("node-fetch");
 const { readFile, writeFile } = require('fs/promises');
+const FormData  = require('form-data');
+const axios = require('axios');
+const fs = require("fs")
 
 var indexRouter = require('./routes/index');
 const e = require('express');
@@ -27,6 +30,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/generate', indexRouter);
 
 
+
+
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -45,3 +54,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
