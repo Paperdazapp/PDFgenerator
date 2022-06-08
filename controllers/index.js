@@ -7,7 +7,7 @@ const axios = require('axios');
 const fs = require("fs")
 
 require("dotenv").config();  
-const UPLOAD_URL= "http://localhost:9001/api/v2/file/upload_pdf"
+const UPLOAD_URL= "https://paperdaz-be.herokuapp.com/api/v2/file/upload_pdf"
 
 const fillForm =async(req, res, next)=>{
        const {pdf_url, data} = req.body

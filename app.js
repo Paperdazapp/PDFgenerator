@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 const { PDFDocument, rgb} = require('pdf-lib');
 const fetch = require("node-fetch");
-const { readFile, writeFile } = require('fs/promises');
+
 const FormData  = require('form-data');
 const axios = require('axios');
 const fs = require("fs")
