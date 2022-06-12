@@ -13,6 +13,8 @@ app.get('/', function (req, res) {
 
 app.use('/generate', indexRouter);
 
-app.listen(8000, ()=>{
-    console.log('started at 8000')
+const port = process.env.PORT
+
+app.listen( port || 8000, ()=>{
+    console.log('started at ' + port)
 })

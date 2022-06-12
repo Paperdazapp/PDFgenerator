@@ -17,6 +17,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "node-fetch": "^3.2.6",
     "pdf-lib": "^1.17.1"
   }
 }
