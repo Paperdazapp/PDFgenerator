@@ -6,6 +6,10 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
   "dependencies": {
     "axios-fileupload": "^0.0.1",
     "cookie-parser": "~1.4.4",
