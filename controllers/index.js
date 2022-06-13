@@ -62,6 +62,7 @@ const fillForm =async(req, res, next)=>{
           const pdfBytes = await pdfDoc.save();
           await writeFile("output.pdf", pdfBytes);
           console.log('PDF created!');
+          return res.send(pdfBytes)
 
 
         const FormData = require('form-data');
