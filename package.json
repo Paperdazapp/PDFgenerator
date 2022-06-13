@@ -2,13 +2,13 @@
   "name": "app",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
-  },
   "engines" : { 
     "npm" : ">=7.0.0",
     "node" : ">=16.0.0"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "axios-fileupload": "^0.0.1",
