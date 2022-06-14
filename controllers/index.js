@@ -5,6 +5,7 @@ const { readFile, writeFile } = require('fs/promises');
 const FormData  = require('form-data');
 const axios = require('axios');
 const fs = require("fs")
+var svg_to_png = require('svg-to-png');
 
 require("dotenv").config();  
 const UPLOAD_URL= "https://paperdaz-be.herokuapp.com/api/v2/file/upload_pdf"
