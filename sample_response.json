@@ -7,38 +7,13 @@
        "value": "Isaac Ameh"
      },
      {
-       "type": "PDFTextField",
-       "fieldName": "Address",
-       "value": "Nigeria"
-     },
-     {
        "type": "PDFDropdown",
        "fieldName": "Dropdown1",
        "value": "25"
      },
      {
-       "type": "PDFDropdown",
-       "fieldName": "Dropdown2",
-       "value": "August"
-     },
-     {
-       "type": "PDFDropdown",
-       "fieldName": "Dropdown3",
-       "value": "2022"
-     },
-     {
        "type": "PDFCheckBox",
        "fieldName": "Check Box1",
-       "isCheck":true
-     },
-     {
-       "type": "PDFCheckBox",
-       "fieldName": "Check Box2",
-       "isCheck":true
-     },
-     {
-       "type": "PDFCheckBox",
-       "fieldName": "Check Box3",
        "isCheck":true
      },
      {
@@ -54,28 +29,21 @@
      },
      {
        "type": "Annotation",
-       "svgPath": "M 10 35 l 150 -30 M 25 50 l 150 30 M 10 35 q 15 -30 30 0 M 175 20 l 15 0",
-       "page_number":0,
-       "x":200,
-       "y":500
-     },
-     {
-       "type": "Annotation",
-       "svgPath": "M19 17.0864L17.0864 19L9.5 11.4136L1.91357 19L0 17.0864L7.58643 9.5L0 1.91357L1.91357 0L9.5 7.58643L17.0864 0L19 1.91357L11.4136 9.5L19 17.0864Z",
-       "page_number":0,
-       "x":400,
-       "y":300
-     },
-     {
-       "type": "Annotation",
        "svgPath": "M98.50395247781066,206.51182276257398L685.3272928994083,206.60289154955623",
        "page_number":0,
        "x":100,
        "y":100
      },
      {
-       "type": "Annotation",
-       "svgPath": "M116.59520617603552,299.904366216716L685.919240014793,299.904366216716L685.919240014793,314.904366216716L116.59520617603552,314.904366216716",
+        "type": "Image",
+        "base64": "base64 strin here",
+        "page_number":0,
+        "x":100,
+        "y":100
+      },
+     {
+       "type": "DrawText",
+       "text": "this is 100% digital paper",
        "page_number":0,
        "x":100,
        "y":100

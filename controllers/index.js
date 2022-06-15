@@ -7,6 +7,7 @@ const axios = require('axios');
 const fs = require("fs")
 var svg_to_png = require('svg-to-png');
 
+
 require("dotenv").config();  
 const UPLOAD_URL= "https://paperdaz-be.herokuapp.com/api/v2/file/upload_pdf"
 
@@ -18,10 +19,10 @@ const fillForm =async(req, res, next)=>{
         const numPages = pdfDoc.getPages.length
         console.log("number of pages ="+(parseInt(numPages)+1)) 
 
+        const form = pdfDoc.getForm()
+        const fields = form.getFields()
+        console.log(`${fields.length} fields found`)
         try {    
-          const form = pdfDoc.getForm()
-          const fields = form.getFields()
-          console.log(`${fields.length} fields found`)
           fields.forEach(field => {
             const type = field.constructor.name
             const name = field.getName()
@@ -54,6 +55,18 @@ const fillForm =async(req, res, next)=>{
               else if(el.type == "Annotation"){
                 let _page = pdfDoc.getPages()[el.page_number];
                 _page.drawSvgPath(el.svgPath, {x:el.x, y: (_page.getHeight() - el.y), borderWidth: 1,})
+              }
+              else if(el.type == "Image"){
+                let _page = pdfDoc.getPages()[el.page_number];
+                //convert to image
+                // var buffer = Buffer.from(el.base64,'base64')
+                // fs.writeFileSync('caption.png',buffer)
+                const pngImage = await pdfDoc.embedPng(el.base64)
+                _page.drawImage(pngImage, {x:el.x, y: (_page.getHeight() - el.y), borderWidth: 1,})
+              }
+              else if(el.type == "DrawText"){
+                let _page = pdfDoc.getPages()[el.page_number];
+                _page.drawText(el.text, {x:el.x, y: (_page.getHeight() - el.y)})
               }
       
             })
