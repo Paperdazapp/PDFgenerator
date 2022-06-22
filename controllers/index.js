@@ -23,21 +23,22 @@ const fillForm =async(req, res, next)=>{
         const fields = form.getFields()
         console.log(`${fields.length} fields found`)
         try {    
-          fields.forEach(field => {
+          fields.forEach(async field => {
             const type = field.constructor.name
             const name = field.getName()
-            console.log(`${type}: ${name}`)
+            // console.log(`${type}: ${name}`)
       
-            data.map(el => {
+            data.map(async el => {
               //if text
               if(el.type == "PDFTextField"){
                 if(el.fieldName == name){
-                  form.getTextField(name).setText(el.value);
+                  await form.getTextField(name).setText(el.value);
+                  console.log(`${type}: ${name}`)
                 }
               } 
               else if(el.type == "PDFDropdown"){
                 if(el.fieldName == name){
-                  form.getDropdown(name).select(el.value);
+                  form.getDropdown(name).select(el.value); 
                 }
               } 
               else if(el.type == "PDFCheckBox"){
@@ -50,7 +51,7 @@ const fillForm =async(req, res, next)=>{
               else if(el.type == "PDFRadioGroup"){
                 if(el.fieldName == name){
                  form.getRadioGroup(name).select(el.value) 
-                }
+                } 
               }
               else if(el.type == "Annotation"){
                 let _page = pdfDoc.getPages()[el.page_number];
@@ -58,20 +59,17 @@ const fillForm =async(req, res, next)=>{
               }
               else if(el.type == "Image"){
                 let _page = pdfDoc.getPages()[el.page_number];
-                //convert to image
-                // var buffer = Buffer.from(el.base64,'base64')
-                // fs.writeFileSync('caption.png',buffer)
-                const pngImage = await pdfDoc.embedPng(el.base64)
+                const pngImage = pdfDoc.embedPng(el.base64)
                 _page.drawImage(pngImage, {x:el.x, y: (_page.getHeight() - el.y), borderWidth: 1,})
               }
               else if(el.type == "DrawText"){
                 let _page = pdfDoc.getPages()[el.page_number];
                 _page.drawText(el.text, {x:el.x, y: (_page.getHeight() - el.y)})
-              }
+              } 
+       
+            }) 
       
-            })
-      
-          })
+          }) 
 
           const pdfBytes = await pdfDoc.save();
           await writeFile("output.pdf", pdfBytes);
