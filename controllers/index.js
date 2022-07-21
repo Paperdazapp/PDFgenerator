@@ -9,7 +9,7 @@ var svg_to_png = require('svg-to-png');
 
 
 require("dotenv").config();  
-const UPLOAD_URL= "https://paperdaz-be.herokuapp.com/api/v2/file/upload_pdf"
+const UPLOAD_URL= "https://backend.paperdaz.com/files"
 
 const fillForm =async(req, res, next)=>{
        const {pdf_url, data} = req.body
@@ -39,7 +39,7 @@ const fillForm =async(req, res, next)=>{
               else if(el.type == "PDFDropdown"){
                 if(el.fieldName == name){
                   form.getDropdown(name).select(el.value); 
-                }
+                } 
               } 
               else if(el.type == "PDFCheckBox"){
                 if(el.fieldName == name){
@@ -79,7 +79,9 @@ const fillForm =async(req, res, next)=>{
  
         const formFile = new FormData();
         formFile.append('upload', fs.createReadStream('././output.pdf'));
- 
+        formFile.append("type", "pdf");
+        console.log('PDF updloaded!');
+
         await axios.post(UPLOAD_URL, formFile, { headers: formFile.getHeaders() })
         .then(function (response) {
           console.log("yes", response)

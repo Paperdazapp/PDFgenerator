@@ -18,7 +18,7 @@ const e = require('express');
 
 var app = express();
 
-app.use(cors("192.168.31.137"));
+app.use(cors());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
