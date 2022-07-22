@@ -1,11 +1,12 @@
 
 const { PDFDocument } = require('pdf-lib');
 const fetch = require("node-fetch");
-const { readFile, writeFile, fs } = require('fs/promises');
+const { readFile, writeFile} = require('fs/promises');
 const FormData  = require('form-data');
 const axios = require('axios');
-// const fs = require("fs")
+const fs = require("fs")
 var svg_to_png = require('svg-to-png');
+const { LocalFileData, constructFileFromLocalFileData} = require('get-file-object-from-local-path')
 
 
 require("dotenv").config();  
@@ -74,26 +75,63 @@ const fillForm =async(req, res, next)=>{
 
           const pdfBytes = await pdfDoc.save();
           await writeFile("output.pdf", pdfBytes);
+          // var stream = fs.createReadStream('././output.pdf')
           console.log('PDF created!');
          
-        const FormData = require('form-data');
- 
-        const formFile = new FormData();
-        formFile.append('upload', fs.createReadStream('././output.pdf'));
-        formFile.append("type", "pdf");
-        console.log('PDF updloaded!');
 
-        await axios.post(UPLOAD_URL, formFile, { headers: formFile.getHeaders() })
-        .then(function (response) {
-          console.log("yes")
-          console.log(response)
-          res.status(201).json(response.data)
-        })
-        .catch(function (err) {
-          console.log("no")
-          console.log(err)
-          res.status(400).json(err)
-        });
+          var datax = new FormData();
+          datax.append('upload', fs.createReadStream('././output.pdf'));
+          datax.append('type', 'pdf');
+          var config = {
+            method: 'post',
+            url: 'http://localhost:3030/files',
+            headers: { 
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2NTc5NjU2NDQsImV4cCI6MTY1ODA1MjA0NCwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiMSIsImp0aSI6IjJmZjk5YjdjLTk5YjYtNGRmMC04MGZiLWY4YWRlYzUyNGZiMCJ9.6j3ciiu8uGs4tfgoppCeMimJISg-Bvq3XMDfPUwNgMU', 
+              ...datax.getHeaders()
+            },
+            data : datax
+          };
+
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+
+
+
+        //   const fileData = new LocalFileData('././output.pdf')
+
+     
+        //   console.log(constructFileFromLocalFileData(fileData))
+        //   console.log(fileData)
+
+
+
+        // const formFile = new FormData();
+        // formFile.append('upload', fileData);
+        // formFile.append("type", "pdf");
+        // console.log(formFile);
+
+
+
+        // await axios.post(UPLOAD_URL, formFile, { headers: {
+        //   "Content-Type": "multipart/form-data",
+        // }})
+        // .then(function (response) {
+        //   console.log("yes")
+        //   console.log(response)
+        //   res.status(201).json(response.data) 
+        // })
+        // .catch(function (err) {
+        //   console.log("no")
+        //   console.log(err)
+        //   res.status(400).json(err)
+        // });
+
 
       }catch(err){
         console.log("nope")
@@ -102,7 +140,6 @@ const fillForm =async(req, res, next)=>{
 
 }  
 
- 
 module.exports = {
     fillForm
 }
