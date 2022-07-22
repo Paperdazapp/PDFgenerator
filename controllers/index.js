@@ -1,15 +1,16 @@
 
 const { PDFDocument } = require('pdf-lib');
 const fetch = require("node-fetch");
-const { readFile, writeFile } = require('fs/promises');
+const { readFile, writeFile, fs } = require('fs/promises');
 const FormData  = require('form-data');
 const axios = require('axios');
-const fs = require("fs")
+// const fs = require("fs")
 var svg_to_png = require('svg-to-png');
 
 
 require("dotenv").config();  
-const UPLOAD_URL= "https://backend.paperdaz.com/files"
+// const UPLOAD_URL= "https://backend.paperdaz.com/files"
+const UPLOAD_URL= "http://localhost:3030/files"
 
 const fillForm =async(req, res, next)=>{
        const {pdf_url, data} = req.body
@@ -84,19 +85,20 @@ const fillForm =async(req, res, next)=>{
 
         await axios.post(UPLOAD_URL, formFile, { headers: formFile.getHeaders() })
         .then(function (response) {
-          console.log("yes", response)
+          console.log("yes")
+          console.log(response)
           res.status(201).json(response.data)
         })
         .catch(function (err) {
+          console.log("no")
           console.log(err)
           res.status(400).json(err)
         });
 
       }catch(err){
+        console.log("nope")
         res.status(400).json(err)
       }
-
-
 
 }  
 
